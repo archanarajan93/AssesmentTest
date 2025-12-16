@@ -1,0 +1,65 @@
+import React from 'react';
+import { useState } from 'react'
+
+function App() {
+  const [userName, setUserName] = useState();
+  const [userDetails,setUserDetails] = useState([]);
+  
+  const styles = {
+    main: {
+      padding: '20px',
+    },
+    title: {
+      color: '#5C6AC4'
+    },
+  };
+  
+  const handleSave = ()=>{
+    
+    setUserDetails((prev)=>{
+      return [...prev,userName];
+    });
+  }
+  
+  const handleDelete = (index)=>{
+    const filterData = userDetails.filter((item,i)=> i != index);
+    
+    console.log("filter",filterData);
+    setUserDetails(filterData);
+  }
+
+  return (
+    <div style={styles.main}>
+     <input name="user_name" type="text" id="userTex" className="userTex"
+     onChange={(e)=>setUserName(e.target.value)}
+     />
+      <div>
+        <button onClick={handleSave}>
+          Save
+        </button>
+      </div>
+      
+      {userDetails && userDetails ? (userDetails.map((items,i)=>(
+    <div>
+      <ul key={i}>
+        {console.log(items)}
+        <li>{items}</li>
+        <button type="button" onClick={()=>handleDelete(i)}>Delete</button>
+      </ul>
+    </div>
+   ))
+    ) : (
+      <div>
+        <p>No Data</p>
+      </div>
+      )
+      
+    }
+      
+      
+    </div>
+    
+  )
+}
+
+export default App
